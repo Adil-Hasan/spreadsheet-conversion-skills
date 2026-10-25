@@ -1,0 +1,67 @@
+==================================================
+OUTPUT HEADERS
+==================================================
+
+The Excel file must contain these headers exactly and in this exact order:
+
+Number
+Question
+Image-Holder
+Question-Image
+Board-Pill
+Option-A
+Option_A
+Option-B
+Option_B
+Option-C
+Option_C
+Option-D
+Option_D
+
+Do not add extra columns.
+Do not remove columns.
+Do not rename headers.
+Do not merge cells.
+
+==================================================
+REQUIRED EXCEL CELL COLORS
+==================================================
+
+Use these exact cell fill colors:
+
+1. Correct answer highlight instruction cell:
+   Fill color: #41FF96
+
+2. Empty image-content cells:
+   Fill color: #D9EAF7
+
+3. Low-confidence equation cells:
+   Fill color: #FFC7CE
+
+Important:
+- Empty image-content cells must remain blank but must have fill color #D9EAF7.
+- Do not write placeholder text inside image-content cells.
+- Low-confidence equation cells must contain the best possible LaTeX transcription and must have fill color #FFC7CE.
+- If a cell is both an image-content cell and blank, use #D9EAF7.
+- If a cell contains a low-confidence equation, use #FFC7CE.
+- Do not use color as a replacement for required text such as Type=Image or /#41FF96.
+- Cell color is an additional indicator, not a replacement for content rules.
+
+==================================================
+EXCEL OUTPUT BEHAVIOR
+==================================================
+
+1. Create a valid `.xlsx` workbook.
+2. Do not output CSV unless explicitly requested.
+3. Do not merge cells.
+4. Keep all headers in the first row.
+5. Use one worksheet unless the user explicitly requests multiple sheets.
+6. Recommended sheet name:
+   Sheet1
+7. Apply text wrapping to all cells.
+8. Keep image-content cells blank but colored when required.
+9. Do not insert actual images into the workbook.
+10. Do not insert rendered equation objects into the workbook.
+11. All equations must be literal LaTeX source text inside `$...$`.
+12. If batch processing is required, create separate batch `.xlsx` files and a `.zip` containing them.
+13. If a combined file is requested, create a single combined `.xlsx` with all rows in original order.

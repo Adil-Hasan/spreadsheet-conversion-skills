@@ -1,0 +1,133 @@
+==================================================
+IMAGE / VISUAL OBJECT RULES
+==================================================
+
+Only these should be treated as Type=Image:
+
+1. Diagrams
+2. Circuit drawings
+3. Graphs
+4. Charts
+5. Tables
+6. Maps
+7. Figures
+8. Real pictures
+9. True image-based options that are not readable text or Word equations
+10. Completely unreadable visual equation objects, only when no confident transcription is possible
+
+Important:
+- Word equation objects are not images.
+- Microsoft Office Math/OMML equations are not images.
+- They must be converted to LaTeX and placed in the correct text cell.
+
+==================================================
+OPTION COLUMN STRUCTURE
+==================================================
+
+There are 4 option pairs:
+
+Option-A and Option_A
+Option-B and Option_B
+Option-C and Option_C
+Option-D and Option_D
+
+The first column in each pair is the instruction/type cell.
+The second column in each pair is the actual option content cell.
+
+Mapping:
+
+Option-A = instruction/type for option ক/A
+Option_A = content for option ক/A
+
+Option-B = instruction/type for option খ/B
+Option_B = content for option খ/B
+
+Option-C = instruction/type for option গ/C
+Option_C = content for option গ/C
+
+Option-D = instruction/type for option ঘ/D
+Option_D = content for option ঘ/D
+
+==================================================
+TEXT OPTION RULE
+==================================================
+
+If the option is normal readable text:
+
+Instruction cell = blank
+Content cell = option text
+
+Example:
+
+Option-A =
+Option_A = ঢাকা
+
+Option-B =
+Option_B = চট্টগ্রাম
+
+Do not write /hide in option instruction cells or option content cells for normal text options.
+
+==================================================
+EQUATION OPTION RULE
+==================================================
+
+If an option contains a readable equation, selectable equation, Word equation object, Office Math object, or OMML equation:
+
+Instruction cell = blank
+Content cell = converted LaTeX equation wrapped in `$...$`
+
+Example:
+
+Option-A =
+Option_A = $\frac{Q}{t}$
+
+Option-B =
+Option_B = $V = IR$
+
+Do not mark Word equation options as Type=Image.
+
+If the equation is low-confidence:
+- Still write the best possible LaTeX transcription.
+- Apply cell fill color #FFC7CE to the content cell.
+- Do not leave the equation blank.
+
+==================================================
+IMAGE OPTION RULE
+==================================================
+
+If an option is a true image, diagram, graph, table, figure, symbol image, circuit, or unreadable picture-based object:
+
+Instruction cell = Type=Image
+Content cell = blank
+Content cell fill color = #D9EAF7
+
+Example:
+
+Option-A = Type=Image
+Option_A = blank with fill color #D9EAF7
+
+Option-B = Type=Image
+Option_B = blank with fill color #D9EAF7
+
+Important:
+- Do not insert actual images.
+- Do not create placeholder images.
+- Do not write “image only”, “insert image here”, filenames, captions, labels, or placeholders.
+- The corresponding option content cell must remain blank.
+- The user will manually insert the option image later.
+
+==================================================
+TABLE / DIAGRAM / GRAPH / CIRCUIT RULE
+==================================================
+
+1. Any table, diagram, graph, chart, circuit, map, or figure is treated as an image/object.
+2. If it belongs to the question/stimulus:
+   Image-Holder = Type=Image
+   Question-Image = blank with fill color #D9EAF7
+3. If it belongs to an option:
+   Relevant option instruction cell = Type=Image
+   Relevant option content cell = blank with fill color #D9EAF7
+4. Do not rewrite tables or diagrams as text unless they are clearly available as normal selectable text.
+5. Do not insert actual images.
+6. Do not create placeholder images.
+7. Word equations inside or near the question must still be extracted as LaTeX if they are structurally available.

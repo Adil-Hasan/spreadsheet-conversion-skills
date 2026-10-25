@@ -1,0 +1,263 @@
+MCQ Sheet Builder – Semantic QC Add-on Rules
+==============================================
+
+Use this file as an additional rule layer after the existing core, schema/colors, extraction, visual, equation/LaTeX, duplicate-row, and final-QC rules.
+
+Purpose
+-------
+The existing rules control structure and formatting. This add-on requires a final meaning/writing-sense pass so the generated Excel is not only technically valid, but also readable and sensible as exam MCQ content.
+
+Priority
+--------
+1. Never invent missing questions, options, answers, equations, diagrams, references, or topics.
+2. Fix only when the intended correction is strongly supported by the source text, options, answer key, repeated context, or standard subject context.
+3. If a correction is uncertain, keep the safest faithful version, mark low-confidence equation cells with #FFC7CE where applicable, and report the doubt.
+4. Do not rewrite style unnecessarily. Correct OCR/typing/formatting corruption; do not paraphrase clean source text.
+
+==================================================
+1. MANDATORY SEMANTIC / WRITING-SENSE QC PASS
+==================================================
+
+After extraction, equation conversion, answer detection, duplicate-row creation, and formatting, review every Question and Option content cell as an exam-writing editor.
+
+The final text must read like a coherent MCQ for a student. Do not leave mechanically converted strings that are syntactically valid but semantically broken.
+
+Fix clear OCR, formula, unit, punctuation, and Bangla wording corruption when the intended meaning is strongly supported.
+
+Examples of problems that must not remain when confidently fixable:
+
+Bad:
+$Ca+O2\toA$
+$20 গ্রাম$ $Ca$ ব্যবহার করে কত প্রকার A উৎপন্ন হবে?
+
+Good:
+$2Ca + O_2 \to 2CaO$
+$20$ গ্রাম $Ca$ ব্যবহার করে কত গ্রাম $CaO$ উৎপন্ন হবে?
+
+Bad:
+HCI, KCI, PH, pll, C1, Cao, NaOCI
+
+Good:
+HCl, KCl, pH, pH, Cl, CaO, NaOCl
+
+Bad:
+কত প্রকার A
+
+Good, when context is mass/yield:
+কত গ্রাম A
+
+==================================================
+2. CHEMISTRY FORMULA NORMALIZATION
+==================================================
+
+Chemical formulas must preserve element capitalization, subscripts, charges, states, and reaction arrows. Convert OCR-like formulas into standard LaTeX where confidently supported.
+
+Normalize clear chemistry OCR slips, including but not limited to:
+
+O2 -> O_2
+H2 -> H_2
+N2 -> N_2
+Cl2 -> Cl_2
+CO2 -> CO_2
+SO2 -> SO_2
+SO3 -> SO_3
+H2O -> H_2O
+H2SO4 -> H_2SO_4
+HNO3 -> HNO_3
+NaOH -> NaOH
+CaO -> CaO
+Cao -> CaO
+HCI -> HCl
+KCI -> KCl
+C1 -> Cl
+CI-CI -> Cl-Cl
+NaOCI -> NaOCl
+PH -> pH
+pll -> pH
+
+Rules:
+1. Element symbols are case-sensitive.
+2. Digits in chemical formulas should normally become subscripts inside math mode.
+3. Charges should be written clearly, for example $SO_4^{2-}$, $Ca^{2+}$, $Cl^-$.
+4. Reaction arrows should use \to or \rightleftharpoons as appropriate.
+5. Do not wrap Bangla words inside math mode.
+6. Only numbers, formulas, variables, units, equations, and symbols belong inside `$...$`.
+
+Examples:
+Bad: $20 গ্রাম$
+Good: $20$ গ্রাম
+
+Bad: $250 mL দ্রবণ$
+Good: $250$ mL দ্রবণ
+
+Bad: $Ca+O2\toA$
+Good: $2Ca + O_2 \to 2CaO$ only when context confirms A is CaO.
+
+==================================================
+3. REACTION-CONTEXT INFERENCE
+==================================================
+
+For Chemistry MCQs, stimulus variables such as A, B, X, Y, or Z may be defined by a reaction or a table. Carry that context into related questions.
+
+If a stimulus defines A, B, or X through a reaction, replace or clarify the variable only when the reaction, options, answer key, and standard textbook context strongly identify it.
+
+Example:
+Stimulus:
+Ca + O2 -> A
+
+If related options/answer confirm A is calcium oxide, use:
+$2Ca + O_2 \to 2CaO$
+
+Related stem:
+20 গ্রাম Ca ব্যবহার করে কত গ্রাম CaO উৎপন্ন হবে?
+
+Do not guess variables when context is incomplete. Keep the variable and mark/report uncertainty where needed.
+
+==================================================
+4. IMPOSSIBLE OR UNNATURAL PHRASE CLEANUP
+==================================================
+
+Flag and fix impossible or unnatural Bangla phrases when the intended exam phrase is strongly supported by context.
+
+Common fixes:
+কত প্রকার -> কত গ্রাম, when the question is clearly about produced mass/yield
+জ্বলীয় দ্রবণ -> জলীয় দ্রবণ
+অববিটাল -> অরবিটাল
+ইল্লেকট্রন -> ইলেকট্রন
+বন্ধন জোড় -> বন্ধনজোড়
+দ্রবের অণুর সংখ্যা -> দ্রবের অণু সংখ্যা
+সামস্যা -> সমস্যা
+আঙ্গল -> আঙুল
+কাধ -> কাঁধ
+হাটু -> হাঁটু
+
+Do not modernize or rewrite valid source style. Only correct clear OCR/typing corruption.
+
+==================================================
+5. SELECTIVE DOLLAR WRAPPING
+==================================================
+
+Math wrapping must be granular.
+
+Do:
+$0.75$ মোলার $NaCl$ দ্রবণ
+$250$ mL দ্রবণ
+$244$ kJ/mol
+$3p$ অরবিটাল
+$50-60$ cm
+$pH = 7$
+
+Do not:
+$250 mL দ্রবণ$
+$20 গ্রাম$
+$HCl দ্রবণ$
+$কত গ্রাম CaO$
+
+Bangla explanatory text stays outside math mode.
+
+==================================================
+6. EQUATION RECONSTRUCTION LIMITS
+==================================================
+
+If extracted equation text is missing operators, arrows, subscripts, coefficients, or spacing, reconstruct only when the surrounding stem, options, answer, and standard textbook reaction make the intended equation unambiguous.
+
+If the equation cannot be reconstructed confidently:
+1. Keep the safest faithful transcription.
+2. Mark the cell #FFC7CE if the equation is low-confidence.
+3. Report the unresolved issue.
+4. Do not invent a missing equation or option.
+
+==================================================
+7. SUBJECT-SPECIFIC QC PASSES
+==================================================
+
+Chemistry QC:
+- Element capitalization is correct.
+- Subscripts are applied inside formulas.
+- Reaction arrows are readable.
+- Balanced reactions may be used only when clearly supported.
+- pH, HCl, KCl, CaO, NaOH, H2SO4, HNO3, NaOCl, Cl2, O2, CO2 are normalized.
+- Bangla unit words such as গ্রাম stay outside math mode.
+- Formula options must not be blank if the formula is readable or recoverable.
+- Do not leave broken strings such as $Ca+O2\toA$ when a meaningful reaction is clear.
+
+Physics QC:
+- Numeric quantities and units are wrapped cleanly and granularly, for example $5$ cm, $0.24$ cal, $50-60$ cm.
+- Do not use LaTeX thin space command \, for numeric unit spacing.
+- Use normal visible spacing in math mode if needed.
+- Fractions using \frac must follow the visible-space ending rule: the cell ends with exactly one newline and one non-breaking space.
+- Vector/scalar text should not be accidentally wrapped as a full Bangla sentence.
+
+Mathematics QC:
+- Fractions, roots, exponents, sets, angles, degrees, ratios, intervals, and functions are checked for readable LaTeX.
+- Geometry questions that depend on a figure must have Image-Holder = Type=Image and Question-Image blank with #D9EAF7.
+- Do not leave blank equation options unless the source equation is truly unreadable.
+
+Biology QC:
+- Diagram labels should not be dumped into the Question as random broken lines.
+- If a true diagram is present, mark Image-Holder = Type=Image and keep Question-Image blank with #D9EAF7.
+- Include only meaningful readable diagram labels in the Question when they are needed for answering.
+
+Bangla / BGS / ICT QC:
+- Fix clear OCR slips and broken punctuation.
+- Do not alter literary phrasing unless visibly corrupted.
+- Preserve stimulus text and i/ii/iii statements.
+
+==================================================
+8. VISUAL CLUTTER RULE
+==================================================
+
+If a true diagram, graph, chart, table, figure, map, circuit, or real image is present, do not dump scattered OCR labels into the Question as broken standalone lines unless they are meaningful and necessary.
+
+Use:
+Image-Holder = Type=Image
+Question-Image = blank with #D9EAF7 fill
+
+Do not insert actual images.
+
+For readable labels:
+- Include necessary labels in the Question if they help identify the diagram.
+- Keep them organized and readable.
+- Do not include meaningless OCR fragments.
+
+==================================================
+9. PRE-FINAL SAMPLE AUDIT
+==================================================
+
+Before final export, inspect:
+1. Every row containing any of these patterns:
+   \to, \frac, _, ^, mol, mL, pH, HCl, KCl, NaOH, CaO, O_2, H_2SO_4, HNO_3, kJ, cm, kg, N, V, A, Ω
+2. At least 10 equation-heavy rows per science/math subject.
+3. All rows where an answer highlight is missing.
+4. All rows with blank option content cells.
+5. All rows with Type=Image.
+
+Fix mechanical and writing-sense issues before export.
+
+==================================================
+10. FINAL REPORT RULE
+==================================================
+
+When a content-check note is needed, distinguish clearly between:
+
+Fixed confidently:
+- OCR formula normalization
+- Writing-sense corrections
+- Answer highlight repairs
+- Numbering repairs
+- Unit/equation formatting repairs
+
+Still unresolved:
+- Missing source equation
+- Blank option formula
+- Diagram-dependent answer
+- Ambiguous corrupted answer key
+- Unreadable visual object
+
+Keep the report concise.
+
+==================================================
+11. KEY FINAL CHECK
+==================================================
+
+The finished workbook must not contain mechanically valid but nonsensical text. A student should be able to read each MCQ naturally. If the cell looks like raw OCR or broken converter output, repair it if strongly supported; otherwise mark/report it instead of silently passing it.

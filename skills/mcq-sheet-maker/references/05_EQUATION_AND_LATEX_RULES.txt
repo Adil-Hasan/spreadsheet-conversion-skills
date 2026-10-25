@@ -1,0 +1,563 @@
+==================================================
+EQUATION, MATH, UNIT, AND LATEX RULES
+==================================================
+
+This file is the single source of truth for equation handling.
+
+Equations are nonnegotiable. Every readable or extractable equation, formula, symbol, mathematical expression, numeric physics quantity, and unit expression must be included and wrapped in `$...$`.
+
+Do not treat Word equations as images.
+
+Microsoft Word equation objects, Office Math objects, OMML equations, and inserted Word equations must be extracted and converted to standard LaTeX.
+
+Only true visual objects such as diagrams, circuits, graphs, charts, tables, maps, figures, real pictures, and unreadable raster objects should be treated as images.
+
+==================================================
+MATH CASES
+==================================================
+
+--------------------------------------------------
+CASE 1: NORMAL SELECTABLE TEXT MATH
+--------------------------------------------------
+
+If math appears as normal selectable text, preserve it and convert it into standard LaTeX inside single dollar signs.
+
+Examples:
+
+Source:
+I = Q/t
+
+Output:
+$I = \frac{Q}{t}$
+
+Source:
+V = IR
+
+Output:
+$V = IR$
+
+Source:
+8 s-এ 4 A
+
+Output:
+$8\,s$-এ $4\,A$
+
+Rules:
+1. Every mathematical expression, variable, equation, formula, unit expression, symbolic relation, ratio, exponent, fraction, and numeric physics quantity must be inside `$...$`.
+2. Bangla explanatory text must stay outside math mode.
+3. Do not leave raw math outside `$...$`.
+4. Do not wrap the entire Bangla sentence in math mode.
+5. Only wrap the mathematical part.
+
+--------------------------------------------------
+CASE 2: WORD EQUATION / OFFICE MATH / OMML
+--------------------------------------------------
+
+If math appears as a Microsoft Word equation object, Office Math object, OMML equation, or inserted Word equation, it is NOT an image.
+
+Extract it and convert it to standard LaTeX source text inside `$...$`.
+
+Examples:
+
+Word equation meaning:
+Q = It
+
+Output:
+$Q = It$
+
+Word equation meaning:
+I = Q/t
+
+Output:
+$I = \frac{Q}{t}$
+
+Word equation meaning:
+R = V/I
+
+Output:
+$R = \frac{V}{I}$
+
+Word equation meaning:
+1/R = 1/R1 + 1/R2
+
+Output:
+$\frac{1}{R} = \frac{1}{R_1} + \frac{1}{R_2}$
+
+Rules:
+1. Do not leave the cell blank if a Word equation object exists.
+2. Do not mark a Word equation object as Type=Image.
+3. Do not replace an equation with placeholder text.
+4. Do not write “equation here”, “formula image”, or similar placeholders.
+5. Do not omit the equation.
+6. If conversion is uncertain, include the best possible LaTeX and apply fill color #FFC7CE to that cell.
+
+--------------------------------------------------
+CASE 3: TRUE IMAGE-BASED EQUATION
+--------------------------------------------------
+
+If an equation is only available as a picture, screenshot, scanned image, or raster image, try to transcribe it if it is readable.
+
+If clearly readable:
+- Transcribe it into standard LaTeX.
+- Wrap it in `$...$`.
+
+If partially readable or low-confidence:
+- Transcribe the best possible LaTeX.
+- Apply fill color #FFC7CE to the cell containing the low-confidence equation.
+
+If completely unreadable:
+- Write exactly:
+[NEEDS_EQUATION_REVIEW]
+- Apply fill color #FFC7CE to that cell.
+
+Do not silently omit image-based equations.
+
+==================================================
+EQUATION OPTIONS
+==================================================
+
+If an option contains readable text math, selectable math, Word equation, Office Math, or OMML:
+
+Instruction cell = blank
+Content cell = converted LaTeX wrapped in `$...$`
+
+Example:
+
+Option-A =
+Option_A = $\frac{Q}{t}$
+
+Option-B =
+Option_B = $V = IR$
+
+Do not mark Word equation options as Type=Image.
+
+If the equation is low-confidence:
+- Still write the best possible LaTeX transcription.
+- Apply fill color #FFC7CE to the content cell.
+- Do not leave the equation blank.
+
+==================================================
+STANDARD LATEX FORMAT
+==================================================
+
+Use standard LaTeX only.
+
+Correct:
+$\frac{Q}{t}$
+$\frac{V}{I}$
+$R_1 + R_2$
+$x^2$
+$x^{-1}$
+$10^{-5}$
+$P = VI$
+$P = I^2R$
+$P = \frac{V^2}{R}$
+$\Omega$
+$\mathrm{kWh}$
+$R = 5\,\Omega$
+$2\,\mathrm{k}\Omega$
+$\rho = 1.7 \times 10^{-8}\,\Omega\,\mathrm{m}$
+$\sigma = 5.8 \times 10^7\,\Omega^{-1}\,\mathrm{m}^{-1}$
+
+Incorrect:
+Q/t
+V/I
+$Q/t$
+$\frac(Q)(t)$
+x²
+x₁
+10⁻⁵
+Ω outside math mode
+R = 5 Ω
+$R = 5 Ω$
+$5 ohm$
+$5Ω$
+$\Omega$ের সূত্র
+
+==================================================
+FRACTIONS
+==================================================
+
+Use standard LaTeX fractions.
+
+Correct:
+$\frac{Q}{t}$
+$\frac{V}{I}$
+$\frac{x^3}{P(x)}$
+
+Incorrect:
+Q/t
+V/I
+$Q/t$
+$\frac(Q)(t)$
+$x^3/P(x)$ when a true fraction is intended
+
+Only convert slash expressions to `\frac{...}{...}` when they clearly represent a mathematical fraction.
+
+==================================================
+SUPERSCRIPTS AND SUBSCRIPTS
+==================================================
+
+Use standard LaTeX superscripts and subscripts.
+
+Correct:
+$x^2$
+$x^{-1}$
+$x^{n+1}$
+$a_n$
+$a_{n+1}$
+$R_1$
+$R_2$
+
+Incorrect:
+x²
+x⁻¹
+x₁
+$x^-1$
+$x^(n+1)$
+$a_(n+1)$
+
+Always use braces for grouped or negative exponents:
+$10^{-8}$
+$\mathrm{m}^{-1}$
+$\Omega^{-1}$
+
+Do not use:
+^(-1)
+^(n+1)
+m^-1
+
+==================================================
+UNITS AND NUMERIC PHYSICS VALUES
+==================================================
+
+Physics values and units must be wrapped in `$...$`.
+
+Correct:
+$8\,s$
+$4\,A$
+$32\,C$
+$0\,V$
+$10\,mA$
+$120\,V$
+$1.5\,V$
+$60\,W$
+$1.8\,\mathrm{kWh}$
+$5\,\Omega$
+$1.59 \times 10^{-8}\,\Omega\,\mathrm{m}$
+$5.8 \times 10^7\,\Omega^{-1}\,\mathrm{m}^{-1}$
+
+Incorrect:
+8 s
+4 A
+32 C
+0 V
+10 mA
+120 V
+1.5 V
+60 W
+1.8 kwh
+5 Ω
+1.59×10⁻⁸ Ωm
+
+Spacing rule:
+- Use a thin space `\,` between number and unit.
+- Use `\mathrm{}` for textual compound units where needed.
+- Prefer `\times` for scientific notation.
+
+==================================================
+GENERAL SYMBOL AND UNIT NORMALIZATION
+==================================================
+
+Normalize all math symbols into valid LaTeX.
+
+Examples:
+Ω or Ω as resistance unit/symbol → `\Omega`
+ohm/ওহম as resistance unit → `\Omega`
+kWh → `\mathrm{kWh}`
+m as meter in compound units → `\mathrm{m}`
+S as siemens in compound unit → `\mathrm{S}` if needed
+
+Do not convert names of scientists or laws into symbols.
+
+Correct:
+ও’ম
+ও’মের সূত্র
+Ohm’s law
+
+Incorrect:
+$\Omega$’র সূত্র
+$\Omega$ের সূত্র
+$\Omega$ law
+
+==================================================
+RESISTANCE, RESISTIVITY, AND CONDUCTIVITY UNITS
+==================================================
+
+Handle resistance-related units carefully.
+
+Resistance:
+$5\,\Omega$
+$10\,\Omega$
+$2\,\mathrm{k}\Omega$
+$1.5\,\mathrm{M}\Omega$
+$R = 6\,\Omega$
+
+Resistivity / ohm-meter:
+$\Omega\,\mathrm{m}$
+$\rho = 1.59 \times 10^{-8}\,\Omega\,\mathrm{m}$
+
+Conductivity / inverse ohm-meter:
+$\Omega^{-1}\,\mathrm{m}^{-1}$
+$\sigma = 5.8 \times 10^7\,\Omega^{-1}\,\mathrm{m}^{-1}$
+
+Also acceptable if source uses siemens per meter:
+$\mathrm{S\,m^{-1}}$
+
+Never concatenate commands and units.
+
+Incorrect:
+\Omegam
+\Omegam^{-1}
+\Omegam^(-1)
+$1.59\times10^{-8}\Omegam$
+$\Omega m$
+$\Omega-m$
+$\Omega^{-1}m^{-1}$
+
+Correct:
+$\Omega\,\mathrm{m}$
+$\Omega^{-1}\,\mathrm{m}^{-1}$
+$1.59 \times 10^{-8}\,\Omega\,\mathrm{m}$
+
+Reason:
+`\Omegam` is invalid because LaTeX reads it as one command named `\Omegam`.
+
+==================================================
+LOWERCASE OMEGA
+==================================================
+
+If lowercase omega is used as a variable, angular velocity, or symbol, use `\omega`.
+
+Correct:
+$\omega$
+$\omega = 2\pi f$
+
+Incorrect:
+$w$ when source means omega
+$\Omega$ when source means lowercase omega
+
+==================================================
+BANGLA + MATH MIXED TEXT
+==================================================
+
+Keep Bangla outside math mode and math inside math mode.
+
+Correct:
+কোনো পরিবাহীর যেকোনো প্রস্থচ্ছেদের ভিতর দিয়ে $8\,s$-এ $4\,A$ তড়িৎ প্রবাহিত হলে কত কুলম্ব চার্জ প্রবাহিত হয়?
+
+Incorrect:
+$কোনো পরিবাহীর যেকোনো প্রস্থচ্ছেদের ভিতর দিয়ে 8 s-এ 4 A তড়িৎ প্রবাহিত হলে কত কুলম্ব চার্জ প্রবাহিত হয়?$
+
+==================================================
+BAD LATEX PATTERN CLEANUP
+==================================================
+
+Before final Excel output, scan every text cell and normalize bad patterns.
+
+--------------------------------------------------
+FRACTIONS
+--------------------------------------------------
+
+Bad:
+Q/t
+V/I
+$Q/t$
+$V/I$
+\frac(Q)(t)
+
+Correct:
+$\frac{Q}{t}$
+$\frac{V}{I}$
+
+--------------------------------------------------
+EXPONENTS
+--------------------------------------------------
+
+Bad:
+^(-1)
+^(2)
+^(n+1)
+x^-1
+10^(-8)
+
+Correct:
+^{-1}
+^{2}
+^{n+1}
+x^{-1}
+10^{-8}
+
+--------------------------------------------------
+METER INVERSE
+--------------------------------------------------
+
+Bad:
+m^-1
+m^(-1)
+\mathrm{m^-1}
+\mathrm{m^(-1)}
+
+Correct:
+\mathrm{m}^{-1}
+
+--------------------------------------------------
+SCIENTIFIC NOTATION
+--------------------------------------------------
+
+Bad:
+1.59\times10^{-8}
+5.8\times10^7
+
+Preferred:
+1.59 \times 10^{-8}
+5.8 \times 10^7
+
+--------------------------------------------------
+OHM / RESISTIVITY / CONDUCTIVITY
+--------------------------------------------------
+
+Bad:
+\Omegam
+\Omega m
+\Omega\mathrm{m}
+Ωm
+Ωm
+ohm m
+ওহম m
+
+Correct:
+\Omega\,\mathrm{m}
+
+Bad:
+$1.59\times10^{-8}\Omegam$
+
+Correct:
+$1.59 \times 10^{-8}\,\Omega\,\mathrm{m}$
+
+Bad:
+\Omegam^(-1)
+\Omegam^{-1}
+\Omega m^(-1)
+\Omega m^{-1}
+\Omega^-1 m^-1
+\Omega^{-1}m^{-1}
+
+Correct for conductivity:
+\Omega^{-1}\,\mathrm{m}^{-1}
+
+Context rule:
+- আপেক্ষিক রোধ / resistivity usually uses `\Omega\,\mathrm{m}`.
+- পরিবাহকত্ব / conductivity usually uses `\Omega^{-1}\,\mathrm{m}^{-1}`.
+
+==================================================
+FORBIDDEN EQUATION OUTPUT PATTERNS
+==================================================
+
+No output cell should contain these patterns:
+
+\Omegam
+\Omega m
+Ω
+Ω
+^(-1)
+^(2)
+^(n+1)
+m^-1
+\mathrm{m^-1}
+x²
+x³
+x₁
+10⁻⁸
+
+Exception:
+Unicode characters may remain only if they are part of non-mathematical source text, which should be rare.
+
+==================================================
+FRACTION VISIBLE LINE-SPACE RULE
+==================================================
+
+If a non-image text cell contains the LaTeX command `\frac`, the cell must show exactly ONE visible blank line under the text.
+
+Use a forced visible blank-line ending, not raw trailing newlines.
+
+Required cell-value ending:
+\n\u00A0
+
+Meaning:
+1. Add exactly one newline character after the final visible text.
+2. On the new line, add exactly one non-breaking space character (`\u00A0`).
+3. Do not add normal spaces.
+4. Do not add two raw newline characters.
+5. Do not add three or more newline characters.
+6. Do not strip or trim this ending.
+7. Do not add the line space inside `$...$`.
+8. The ending must be at the very end of the cell value.
+
+Why:
+- Many Excel generators, viewers, or model outputs visually ignore or trim trailing `\n\n`.
+- A newline followed by a non-breaking space forces Excel and downstream automation to preserve one visible blank line.
+
+Apply this rule only to:
+Question
+Board-Pill
+Option_A
+Option_B
+Option_C
+Option_D
+
+Do not apply this rule to:
+Question-Image
+Image option content cells
+Image answer marker cells
+
+Correct stored cell value:
+তড়িৎ প্রবাহ $I = \frac{Q}{t}$ দ্বারা নির্ণয় করা হয়।\n\u00A0
+
+Correct stored cell value:
+$\frac{V}{I}$\n\u00A0
+
+Incorrect:
+তড়িৎ প্রবাহ $I = \frac{Q}{t}$ দ্বারা নির্ণয় করা হয়।\n
+
+Incorrect:
+তড়িৎ প্রবাহ $I = \frac{Q}{t}$ দ্বারা নির্ণয় করা হয়।\n\n
+
+Incorrect:
+তড়িৎ প্রবাহ $I = \frac{Q}{t}$ দ্বারা নির্ণয় করা হয়।\n\n\n
+
+Implementation requirements for XLSX generation:
+1. Enable text wrapping for every cell:
+   wrap_text = True
+2. Set vertical alignment to top:
+   vertical = "top"
+3. Do not call `.strip()`, `.rstrip()`, or any cleanup that removes the final `\n\u00A0`.
+4. If row height is manually controlled, make rows containing `\frac` taller than normal rows.
+
+==================================================
+LOW-CONFIDENCE EQUATION QC
+==================================================
+
+If an equation is uncertain but partly readable:
+
+1. Include the best possible LaTeX transcription.
+2. Wrap it in `$...$`.
+3. Fill the cell with #FFC7CE.
+4. Do not leave it blank.
+5. Do not replace it with an image marker unless it is a true unreadable visual object.
+
+If an equation is completely unreadable:
+
+1. Write:
+   [NEEDS_EQUATION_REVIEW]
+2. Fill the cell with #FFC7CE.

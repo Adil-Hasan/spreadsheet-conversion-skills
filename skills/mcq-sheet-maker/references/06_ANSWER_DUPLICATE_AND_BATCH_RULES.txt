@@ -1,0 +1,113 @@
+==================================================
+ANSWER DETECTION RULES
+==================================================
+
+Use the provided answer key, marked answer, bold/underline/checkmark, explanation, or answer text to identify the correct option.
+
+Common answer formats:
+
+উত্তরঃ ক
+উত্তর: খ
+সঠিক উত্তর: গ
+Ans: D
+Answer: A
+উত্তর: 32 C
+উত্তর: ভোল্টমিটার
+
+Answer mapping:
+
+ক or A = Option-A / Option_A
+খ or B = Option-B / Option_B
+গ or C = Option-C / Option_C
+ঘ or D = Option-D / Option_D
+
+If answer text is given instead of option letter:
+1. Match the answer text to the option content text.
+2. If the matching option is found, mark that option in the duplicate row.
+3. If the answer text refers to an equation option, match it to the converted LaTeX option when possible.
+4. If the answer text refers to an image/object option and the matching option cannot be confidently identified, do not highlight any option.
+5. If the correct answer cannot be confidently identified, still create the duplicate row but do not add /#41FF96 anywhere.
+
+==================================================
+DUPLICATE ROW AND ANSWER-HIGHLIGHT RULE
+==================================================
+
+For every MCQ, create two consecutive rows.
+
+Row 1: Normal row.
+Row 2: Duplicate answer-highlight row.
+
+In Row 2:
+1. Copy all cells exactly from Row 1.
+2. Change only the correct answer’s instruction/type cell.
+3. Do not change the content cell.
+4. Do not place answer markers inside Question-Image or Option_A/Option_B/Option_C/Option_D.
+5. Do not place answer markers in image-content cells.
+6. Preserve all cell fill colors from the normal row unless the answer instruction cell receives the correct-answer color.
+
+--------------------------------------------------
+IF THE CORRECT OPTION IS TEXT OR EQUATION
+--------------------------------------------------
+
+Normal row:
+
+Option-A =
+Option_A = Correct answer text or equation
+
+Duplicate answer row:
+
+Option-A = /#41FF96
+Option_A = Correct answer text or equation
+
+The correct option instruction cell must also have fill color #41FF96.
+
+Same rule applies to Option-B, Option-C, and Option-D.
+
+--------------------------------------------------
+IF THE CORRECT OPTION IS IMAGE / TRUE VISUAL OBJECT
+--------------------------------------------------
+
+Normal row:
+
+Option-A = Type=Image
+Option_A = blank with fill color #D9EAF7
+
+Duplicate answer row:
+
+Option-A = /#41FF96 || {Option-Text}: Image=True
+Option_A = blank with fill color #D9EAF7
+
+The correct option instruction cell must also have fill color #41FF96.
+
+The image answer marker must be exactly:
+
+/#41FF96 || {Option-Text}: Image=True
+
+Important:
+- `{Option-Text}` is literal fixed text.
+- Do not replace `{Option-Text}` with the actual image value.
+- Do not write formula values such as `$10$`, `$\frac{1}{2}$`, A, B, C, D, or any readable image text in the instruction cell.
+- Do not use `Type=Image, /#41FF96`.
+- Do not use `/#41FF96 || Image=True`.
+
+==================================================
+LARGE FILE / BATCH RULE
+==================================================
+
+If the document contains more than 25 MCQs, process the file in batches of maximum 25 MCQs.
+
+Batch filenames must follow this format:
+
+MCQ_001-025.xlsx
+MCQ_026-050.xlsx
+MCQ_051-075.xlsx
+MCQ_076-100.xlsx
+MCQ_101-125.xlsx
+
+Rules:
+1. Preserve original question order.
+2. Do not skip questions between batches.
+3. Do not restart numbering unless the source document restarts numbering.
+4. Apply the same extraction, equation, image, answer-row, and color rules to every batch.
+5. If the user asks for the full file, first create batch files, then create one combined final Excel file.
+6. If a batch has fewer than 25 remaining MCQs, process only the remaining MCQs.

@@ -1,0 +1,186 @@
+==================================================
+GENERAL EXTRACTION RULES
+==================================================
+
+1. Extract every MCQ from the document.
+2. Preserve the original numbering style when possible.
+3. Preserve Bangla, English, punctuation, symbols, equations, and line breaks as accurately as possible.
+4. Extract board/reference text when available.
+5. Statements such as i, ii, iii are part of the Question cell, not options.
+6. Stimulus text must be repeated inside the Question cell for every related MCQ.
+7. Do not create a separate row only for a stimulus.
+8. Tables, charts, diagrams, graphs, figures, maps, circuit drawings, and real picture-based visuals are treated as images.
+9. Microsoft Word equation objects, Office Math objects, OMML equations, and inserted Word equations are not images. They must be converted to LaTeX.
+10. If a visible equation is extractable from the document structure, convert it to LaTeX.
+11. If a visible equation is readable from an image but not structurally extractable, transcribe it into LaTeX.
+12. If a visible equation is only partially readable, write the best possible LaTeX transcription and mark the cell as low-confidence using fill color #FFC7CE.
+13. Never silently omit equations.
+14. Never insert, generate, paste, embed, crop, draw, or place actual images in the Excel file.
+
+==================================================
+COLUMN RULES
+==================================================
+
+1. Number
+
+Use the serial number of the MCQ question.
+
+Examples:
+১
+২
+৩
+
+or
+
+1
+2
+3
+
+Preserve the numbering style from the document when possible.
+
+--------------------------------------------------
+
+2. Question
+
+Include the full main question text.
+
+The Question cell must include:
+- Main question/stem
+- Related stimulus text if the question is stimulus-based
+- i, ii, iii statements if present
+- Instruction line such as “নিচের কোনটি সঠিক?”
+- Any readable or extractable equation related to the question
+
+Do not include ক, খ, গ, ঘ options inside the Question cell.
+
+Example:
+
+রাজা অতিথিকে
+i. সম্মান জানালেন
+ii. সাহায্যের প্রতিশ্রুতি দিলেন
+iii. রূপার আসনে বসতে দিলেন
+নিচের কোনটি সঠিক?
+
+--------------------------------------------------
+
+3. Image-Holder
+
+If the main question/stem/stimulus contains an image, diagram, chart, graph, table, map, circuit, or figure, write exactly:
+
+Type=Image
+
+If the question has no visual object, write exactly:
+
+/hide
+
+Important:
+- Image-Holder is only an instruction/type cell.
+- Do not insert images into Image-Holder.
+- Do not write captions, filenames, placeholders, or labels in Image-Holder.
+- Word equation objects are not counted as images.
+
+--------------------------------------------------
+
+4. Question-Image
+
+Always leave this cell blank.
+
+If the question/stem/stimulus has an image/object:
+- Image-Holder = Type=Image
+- Question-Image = blank
+- Question-Image cell fill color = #D9EAF7
+
+If there is no question/stem/stimulus image/object:
+- Image-Holder = /hide
+- Question-Image = blank
+- No image color indicator is needed
+
+Important:
+- Do not insert images.
+- Do not write filenames.
+- Do not write placeholders.
+- The user will manually insert images later.
+
+--------------------------------------------------
+
+5. Board-Pill
+
+If the question has a board/reference/source, write it in this format:
+
+{Board}: reference text
+
+Examples:
+{Board}: ঢাকা বোর্ড ২০২৩
+{Board}: Rajshahi Board 2022
+{Board}: কু.বো. ২২
+{Board}: মডেল টেস্ট ২০২৪
+
+If there is no board/reference/source, write exactly:
+
+/hide
+
+==================================================
+QUESTION STRUCTURE TYPES
+==================================================
+
+The document may contain these MCQ types:
+
+--------------------------------------------------
+1. Simple MCQ
+--------------------------------------------------
+
+Example:
+
+Question text
+ক. Option
+খ. Option
+গ. Option
+ঘ. Option
+উত্তর: খ
+
+Rules:
+- Put the question text in Question.
+- Put options into Option_A, Option_B, Option_C, Option_D if they are readable text or equations.
+- If an option is a true image/object/diagram/circuit/graph, mark its instruction cell as Type=Image and leave content blank with fill color #D9EAF7.
+
+--------------------------------------------------
+2. Multiple Completion MCQ
+--------------------------------------------------
+
+Example:
+
+Question text
+i. Statement one
+ii. Statement two
+iii. Statement three
+নিচের কোনটি সঠিক?
+ক. i ও ii
+খ. i ও iii
+গ. ii ও iii
+ঘ. i, ii ও iii
+
+Rules:
+- Include question text, i/ii/iii statements, equations, and instruction line inside Question.
+- Do not treat i/ii/iii as options.
+- Only ক/খ/গ/ঘ are options.
+
+--------------------------------------------------
+3. Stimulus-Based MCQ
+--------------------------------------------------
+
+Example:
+
+নিচের উদ্দীপকের আলোকে ২৩ ও ২৪ নং প্রশ্নের উত্তর দাও:
+[stimulus text or image]
+
+২৩. Question text
+ক. Option
+খ. Option
+গ. Option
+ঘ. Option
+
+Rules:
+- If the stimulus is text, repeat the stimulus text inside the Question cell for each related MCQ.
+- If the stimulus contains equations, include the equations as LaTeX.
+- If the stimulus is image/table/diagram/chart/graph/circuit, set Image-Holder = Type=Image and keep Question-Image blank with fill color #D9EAF7 for each related MCQ.
+- Do not create a separate row only for the stimulus.

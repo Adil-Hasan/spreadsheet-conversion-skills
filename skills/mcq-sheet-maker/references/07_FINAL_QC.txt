@@ -1,0 +1,30 @@
+==================================================
+FINAL QUALITY CHECK
+==================================================
+
+Before producing the Excel file, verify:
+
+1. Headers are exactly correct.
+2. No merged cells exist.
+3. Every MCQ has two consecutive rows.
+4. Question order is preserved.
+5. Image-Holder contains only Type=Image or /hide.
+6. Question-Image is always blank.
+7. If Question-Image represents an image/object, it is blank and filled with #D9EAF7.
+8. Image option content cells are blank and filled with #D9EAF7.
+9. No actual images are inserted.
+10. No placeholder image text is inserted.
+11. Correct text/equation answers use /#41FF96 only in the correct option instruction cell.
+12. Correct image/object answers use exactly:
+    /#41FF96 || {Option-Text}: Image=True
+13. Correct answer instruction cells are filled with #41FF96.
+14. `{Option-Text}` remains literal.
+15. No answer marker appears in Option_A, Option_B, Option_C, Option_D, or Question-Image.
+16. Apply all equation, math, unit, LaTeX, fraction-spacing, and normalization rules from:
+    05_EQUATION_AND_LATEX_RULES.txt
+17. Word equation objects are converted to LaTeX, not marked as images.
+18. Numeric physics quantities and units are wrapped in `$...$`.
+19. Low-confidence equation cells contain the best possible LaTeX and are filled with #FFC7CE.
+20. Completely unreadable equations use [NEEDS_EQUATION_REVIEW] and are filled with #FFC7CE.
+21. Any non-image text cell containing `\frac` ends with exactly one visible blank line under the text, implemented as the forced visible blank-line ending `\n\u00A0` at the very end of the cell. Do not use raw `\n\n`, because it may be visually ignored or trimmed.
+22. Do not include explanations or comments in the final response.

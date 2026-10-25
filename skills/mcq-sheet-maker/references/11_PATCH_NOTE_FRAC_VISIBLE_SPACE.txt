@@ -1,0 +1,22 @@
+Fraction Visible Space Patch
+============================
+
+Problem:
+Raw trailing newline rules such as `\n` or `\n\n` may not show a visible blank line in Excel because generators/viewers may trim or visually ignore trailing blank lines.
+
+New rule:
+Cells containing `\frac` must end with:
+
+\n\u00A0
+
+That means:
+- one newline
+- then one non-breaking space
+- at the very end of the cell value
+
+This creates exactly one visible blank line under the text.
+
+Also required:
+- enable text wrapping
+- vertical alignment top
+- do not strip or trim final whitespace
